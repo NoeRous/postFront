@@ -1,0 +1,186 @@
+<div class="container-fluid pt-5">
+    <div class="nk-content-inner">
+        <div class="nk-block-head nk-block-head-sm ">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/admin/postulation">Mis Postulaciones</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Ver postulación</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="nk-block-head-content">
+                </div>
+            </div>
+        </div>
+        <div class="nk-content-body">
+            <div class="nk-block">
+                <div class="card">
+                    <div class="card-aside-wrap">
+                        <div class="card-inner card-inner-lg">
+                            <div class="nk-block-head nk-block-head-lg">
+                                <div class="nk-block-between">
+                                    <div class="nk-block-head-content">
+                                        <h4 class="nk-block-title">Información postulación</h4>
+                                        <div class="nk-block-des">
+                                            <p>Verifique los datos</p>
+                                        </div>
+                                    </div>
+                                    <div class="nk-block-head-content align-self-start d-lg-none">
+                                        <a href="#" class="toggle btn btn-icon btn-trigger mt-n1" data-target="userAside"><em class="icon ni ni-menu-alt-r"></em></a>
+                                    </div>
+                                </div>
+                            </div><!-- .nk-block-head -->
+                            <div class="nk-block">
+                                <div class="nk-data data-list" *ngIf="person" >
+                                    <div class="data-head">
+                                        <h6 class="overline-title">Información básica</h6>
+                                    </div>
+                                    <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
+                                        <div class="data-col">
+                                            <span class="data-label">ESFM/UA</span>
+                                            <span class="data-value">{{postulation?.announcementInstitutionPosition?.institutionPosition?.institution?.name}}</span>
+                                        </div>
+                                        <!-- <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div> -->
+                                    </div><!-- data-item -->
+                                    <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
+                                        <div class="data-col">
+                                            <span class="data-label">Tipo de cargo</span>
+                                            <span class="data-value">{{postulation?.announcementInstitutionPosition?.institutionPosition?.position?.t_par_position_type?.name}}</span>
+                                        </div>
+                                        <!-- <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div> -->
+                                    </div><!-- data-item -->
+
+
+                                    <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
+                                        <div class="data-col">
+                                            <span class="data-label">Cargo</span>
+                                            <span class="data-value">{{postulation?.announcementInstitutionPosition?.institutionPosition?.position?.name}}</span>
+                                        </div>
+                                        <!-- <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div> -->
+                                    </div><!-- data-item -->
+
+                                    <div class="data-item">
+                                        <div class="data-col">
+                                            <span class="data-label">Fecha de postulación</span>
+                                            <span class="data-value">{{postulation?.created_at | date: 'dd/MM/yyyy HH:MM:SS' }}</span>
+                                        </div>
+                                        <!-- <div class="data-col data-col-end"><span class="data-more disable"><em class="icon ni ni-lock-alt"></em></span></div> -->
+                                    </div><!-- data-item -->
+                                    <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
+                                        <div class="data-col">
+                                            <span class="data-label">Tipo de pago</span>
+                                            {{postulation?.voucher? 'Depósito bancario: '+postulation?.voucher:'Descuento por planilla'}}
+                                            <a *ngIf="postulation?.voucher_url" target="_blank"
+                                            [attr.href]="urlUpload+postulation?.voucher_url">(Ver Comprobante)</a>
+                                            <br>
+                                            <span *ngIf="postulation?.is_payroll" class="data-value text-soft">{{postulation?.voucher}}</span>
+                                        </div>
+                                        <!-- <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div> -->
+                                    </div><!-- data-item -->
+                                    <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
+                                        <div class="data-col">
+                                            <span class="data-label">Archivo: {{file_proyect_description}}</span>
+                                            <a *ngIf="postulation?.file_proyect_url" target="_blank"
+                                            [attr.href]="urlUploadProyect+postulation?.file_proyect_url">
+                                                <button [matTooltip]="'Ver archivo: '+file_proyect_description"  mat-mini-fab  aria-label="" color="primary">
+                                                    <mat-icon>file_copy</mat-icon>
+                                                </button>
+                                            </a>
+                                            <span *ngIf="!postulation?.file_proyect_url" class="data-label">No presentó</span>
+
+                                        </div>
+                                        <!-- <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div> -->
+                                    </div><!-- data-item -->
+                                </div><!-- data-list -->
+                                <div class="nk-data data-list">
+                                    <div class="data-head">
+                                        <h6 class="overline-title">Fases</h6>
+                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                          <tr>
+                                            <th scope="col">Nro</th>
+                                            <th scope="col">Fase</th>
+                                            <th scope="col">Es ponderable? </th>
+                                            <th scope="col">Calificación parcial</th>
+                                            <th scope="col">Calificación </th>
+                                            <th scope="col">Observación </th>
+                                            
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr>
+                                            <th scope="row">1</th>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                            <td>Otto</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">2</th>
+                                            <td>Jacob</td>
+                                            <td>Thornton</td>
+                                            <td>@fat</td>
+                                            <td>Otto</td>
+                                          </tr>
+                                          <tr>
+                                            <th scope="row">3</th>
+                                            <td>Larry</td>
+                                            <td>the Bird</td>
+                                            <td>@twitter</td>
+                                            <td>Otto</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+
+
+                                   
+                                   
+                                   
+                                </div><!-- data-list -->
+                            </div><!-- .nk-block -->
+                        </div>
+                        <div class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg" data-toggle-body="false" data-content="userAside" data-toggle-screen="lg" data-toggle-overlay="false">
+                            <div class="card-inner-group">
+                                <div class="card-inner">
+                                    <div class="user-card">
+                                        <div class="user-avatar bg-primary" *ngIf="person" >
+                                            <img [src]="person.image_profile" >
+                                        </div>
+                                        <div class="user-info">
+                                            <span class="sub-text">POSTULANTE</span>
+                                            <span class="lead-text">{{person?.full_name}}</span>
+                                            <span class="sub-text">{{person?person.email:''}}</span>
+                                        </div>
+                                       
+
+                                    </div><!-- .user-card -->
+                                </div><!-- .card-inner -->
+                                <div class="card-inner">
+                                    <div class="user-account-info py-0">
+                                        <h6 class="overline-title-alt">Usuario</h6>
+                                        <div class="user-balance">{{(username)?username:''}}</div>
+                                       
+                                    </div>
+
+                                    <div class="user-account-info py-0">
+                                        <h6 class="overline-title-alt">FASE ACTUAL</h6>
+
+                                        <div><strong> {{postulation?.currentPhase?.name}}</strong></div>
+                                        <div>Fecha Inicio: {{postulation?.currentPhase?.date_init|date:'dd/MM/yyy HH:MM:SS'}}</div>
+                                        <div>Fecha FIn: {{postulation?.currentPhase?.date_end |date:'dd/MM/yyy HH:MM:SS'}}</div>
+                                        <div>Fecha Publicacion de listas: {{postulation?.currentPhase?.date_publication_result|date:'dd/MM/yyy HH:MM:SS'}}</div>
+                                        <div>Instrucciones de la fase: {{postulation?.currentPhase?.description}}</div>
+                                    </div>
+                                </div><!-- .card-inner -->
+                               
+                            </div><!-- .card-inner-group -->
+                        </div><!-- card-aside -->
+                    </div><!-- .card-aside-wrap -->
+                </div><!-- .card -->
+            </div><!-- .nk-block -->
+        </div>
+    </div>
+</div>

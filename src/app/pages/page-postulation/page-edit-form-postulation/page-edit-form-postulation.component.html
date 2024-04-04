@@ -1,0 +1,91 @@
+<p>page-edit-form-postulation works!</p>
+<div class="container-fluid mt-5">
+    <div class="nk-content-inner">
+        <div class="nk-block-head nk-block-head-sm ">
+            <div class="nk-block-between">
+                <div class="nk-block-head-content">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/admin/postulation">Mis Postulaciones</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Editar</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="nk-block-head-content">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="nk-block">
+            <div class="card">
+                <div class="card-aside-wrap">
+                    <div class="card-inner card-inner-sm">
+                        <div class="nk-block-head nk-block-head-sm">
+                            <h5 class="title nk-block-title">Formulario de envio de: {{file_proyect_description}}</h5> 
+                            
+                            <div class="nk-block-des">
+                                <p>Ingrese la información requerida verificando la información.</p>
+                            </div>
+                        </div>
+
+                        <div class="nk-block">
+                            <span class="preview-title-lg overline-title">DATOS POSTULACIÓN</span>
+                            <form [formGroup]="postulationForm">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-sm-6">
+                                            <p>ESFM/UA: {{postulation?.announcementInstitutionPosition?.institutionPosition?.institution?.name}}</p>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p>CARGO: {{postulation?.announcementInstitutionPosition?.institutionPosition?.position?.name}}</p>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="col-md-12">
+                                        
+                                        <span class="preview-title-lg overline-title">DATOS DE PRSENTACIÓN DE DOCUMENTO</span>
+                                        <div class="col-sm-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Archivo</mat-label> 
+                                                <button mat-icon-button matPrefix (click)="f_input.click()">
+                                                    <mat-icon>attach_file</mat-icon>
+                                                </button>
+                                                <input type="text" readonly matInput
+                                                    formControlName="file_proyect_url" />
+                                                <input type="file" multiple hidden #f_input
+                                                    (change)="handleFileInputChange(f_input.files)" />
+                                                <div *ngIf="postulationForm.get('file_proyect_url')?.invalid && (postulationForm.get('file_proyect_url')?.dirty || postulationForm.get('file_proyect_url')?.touched)"
+                                                    style="color:red;">
+                                                    <div
+                                                        *ngIf="postulationForm.get('file_proyect_url')?.hasError('required')">
+                                                        <b>El campo es requerido</b>
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+                                   
+                                </div>
+                                <hr class="preview-hr">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                    </div>
+                                    <div class="col-md-10 text-lg-end">
+                                        <a routerLink="/admin/postulation" mat-raised-button color="warn"
+                                            mat-raised-button class="mx-2">Cancelar</a>
+                                        <button (click)="onSubmit()" mat-raised-button color="primary" type="submit"
+                                            [disabled]="postulationForm.invalid">Guardar</button>
+                                    </div>
+                                    <div class="col-md-2">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

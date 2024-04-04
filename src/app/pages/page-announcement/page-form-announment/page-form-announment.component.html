@@ -1,0 +1,180 @@
+<br><br><br>
+<div class="container-fluid">
+    <div class="nk-content-inner">
+        <div class="nk-content-body">
+            <div class="nk-block-head nk-block-head-sm">
+                <div class="nk-block-between">
+                    <div class="nk-block-head-content">
+                        <div class="nk-block-head-sub"><a class="back-to" routerLink="/admin/announcement"><em
+                                    class="icon ni ni-arrow-left"></em><span>Volver a la lista</span></a></div>
+                    </div><!-- .nk-block-head-content -->
+                    <div class="nk-block-head-content">
+                    </div><!-- .nk-block-head-content -->
+                </div><!-- .nk-block-between -->
+            </div><!-- .nk-block-head -->
+            <div class="nk-block">
+                <div class="nk-block nk-block-lg">
+                    <div class="nk-block-head">
+                        <div class="nk-block-head-content" *ngIf="!id">
+                            <h4 class="title nk-block-title">Llene los campos</h4>
+                            <div class="nk-block-des">
+                                <p>ingrese la información requerida</p>
+                            </div>
+                        </div>
+
+                        <div class="nk-block-head-content" *ngIf="id">
+                            <h4 class="title nk-block-title">Editar</h4>
+                        </div>
+
+                    </div>
+                    <div class="card card-bordered card-preview">
+                        <div class="card-inner">
+                            <div class="preview-block">
+                                <br>
+                                <form [formGroup]="announcementForm">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="row gy-4">
+                                                <div class="col-sm-6">
+                                                    <mat-form-field appearance="fill">
+                                                        <mat-label>Nombre</mat-label>
+                                                        <input matInput formControlName="name">
+                                                    </mat-form-field>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <mat-form-field appearance="fill">
+                                                        <mat-label>Descripción</mat-label>
+                                                        <input matInput formControlName="description">
+                                                    </mat-form-field>
+                                                </div>
+
+                                            </div>
+                                            <br>
+                                            <div class="row gy-4 align-center">
+                                                <div class="col-sm-6">
+                                                    <mat-form-field>
+                                                        <mat-label>Fecha Inicio</mat-label>
+                                                        <input matInput [matDatepicker]="picker"
+                                                            formControlName="date_init">
+                                                        <mat-hint>DD/MM/YYYY</mat-hint>
+                                                        <mat-datepicker-toggle matIconSuffix
+                                                            [for]="picker"></mat-datepicker-toggle>
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <mat-form-field>
+                                                        <mat-label>Fecha Fin</mat-label>
+                                                        <input matInput [matDatepicker]="pickerEnd"
+                                                            formControlName="date_end">
+                                                        <mat-hint>DD/MM/YYYY</mat-hint>
+                                                        <mat-datepicker-toggle matIconSuffix
+                                                            [for]="pickerEnd"></mat-datepicker-toggle>
+                                                        <mat-datepicker #pickerEnd></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+
+                                            <div class="row gy-4 align-center">
+                                                <div class="col-sm-6">
+                                                    <mat-form-field>
+                                                        <mat-label>Fecha de publicación</mat-label>
+                                                        <input matInput [matDatepicker]="pickerPublication"
+                                                            formControlName="publication_date">
+                                                        <mat-hint>DD/MM/YYYY</mat-hint>
+                                                        <mat-datepicker-toggle matIconSuffix
+                                                            [for]="pickerPublication"></mat-datepicker-toggle>
+                                                        <mat-datepicker #pickerPublication></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <mat-form-field appearance="fill">
+                                                        <mat-label>Gestión</mat-label>
+                                                        <input matInput formControlName="year">
+                                                    </mat-form-field>
+                                                </div>
+                                                
+                                            </div>
+
+                                            <br>
+
+                                            <div class="row gy-4 align-center">
+                                                <div class="col-sm-6">
+                                                    <mat-form-field appearance="fill">
+                                                        <mat-label>Cite</mat-label>
+                                                        <input matInput formControlName="cite">
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <mat-form-field>
+                                                        <mat-label>Archivo de la convocatoria</mat-label>
+                                                        <button mat-icon-button matPrefix (click)="f_input.click()">
+                                                            <mat-icon>attach_file</mat-icon>
+                                                        </button>
+                                                        <input type="text" readonly matInput
+                                                            formControlName="file_url" />
+                                                        <input type="file" multiple hidden #f_input
+                                                            (change)="handleFileInputChange(f_input.files)" />
+                                                        <div *ngIf="announcementForm.get('file_url')?.invalid && (announcementForm.get('file_url')?.dirty || announcementForm.get('file_url')?.touched)"
+                                                            style="color:red;">
+                                                            <div
+                                                                *ngIf="announcementForm.get('file_url')?.hasError('required')">
+                                                                <b>El campo es requerido</b>
+                                                            </div>
+                                                        </div>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+
+                                            <div class="row gy-4 align-center">
+                                                <div class="col-sm-6">
+                                                    <mat-form-field>
+                                                        <mat-label>Imagen de la convocatoria</mat-label>
+                                                        <button mat-icon-button matPrefix (click)="f_inputImage.click()">
+                                                            <mat-icon>attach_file</mat-icon>
+                                                        </button>
+                                                        <input type="text" readonly matInput
+                                                            formControlName="image_url" />
+                                                        <input type="file" multiple hidden #f_inputImage
+                                                            (change)="handleImageInputChange(f_inputImage.files)" />
+                                                        <div *ngIf="announcementForm.get('image_url')?.invalid && (announcementForm.get('image_url')?.dirty || announcementForm.get('image_url')?.touched)"
+                                                            style="color:red;">
+                                                            <div
+                                                                *ngIf="announcementForm.get('image_url')?.hasError('required')">
+                                                                <b>El campo es requerido</b>
+                                                            </div>
+                                                        </div>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <hr class="preview-hr">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                        </div>
+                                        <div class="col-md-8 text-lg-end">
+                                            <a routerLink="/admin/announcement" mat-raised-button color="warn"
+                                                class="mx-2">Cancelar</a>
+                                            <button (click)="onSubmit()" type="submit" mat-raised-button color="primary"> {{this.id?'Guardar
+                                                Cambios':'Guardar'}} </button>
+                                        </div>
+                                        <div class="col-md-2">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div><!-- .card-preview -->
+                </div>
+            </div><!-- .nk-block -->
+
+        </div>
+    </div>
+</div>
